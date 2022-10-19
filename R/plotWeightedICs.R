@@ -27,9 +27,15 @@ plotWeightedICs = function(ICweights,
                            colours = "random",
                            cex = .5,
                            seed = FALSE,
-                           inset = c(-0.5,-.34)) {
-  nModels = length(ICweights[1,])
-  nSubj = length(ICweights[, 1])
+                           inset = c(-0.5,-.1)) {
+
+  if(is.vector(ICweights)){
+    nSubj = 1
+    nModels = length(ICweights)
+  } else{
+    nSubj = length(ICweights[, 1])
+    nModels = length(ICweights[1,])
+  }
 
   if (is.numeric(seed)) {
     set.seed(seed) # keep any random colours that are generated constant
@@ -49,10 +55,14 @@ plotWeightedICs = function(ICweights,
     }
   }
 
+
+
+if (is.vector(ICweights)){
+
   plot(
     x = 100,
     y = 100,
-    xlim = c(0, nSubj+0.5),
+    xlim = c(0, nSubj),
     ylim = c(0, 1),
     xlab = "",
     ylab = "",
@@ -61,33 +71,69 @@ plotWeightedICs = function(ICweights,
     yaxt = "n"
   )
 
-  for (i in 1:nSubj) {
-    use.i = i
-    sumThing = 0
-    for (j in 1:nModels) {
-      col = colours[j] # Purple
-      rect(i-0.5,sumThing,i+0.5,sumThing+ICweights[use.i,j], border = col, col = col)
-      sumThing = sumThing + ICweights[use.i, j]
-    }
+  sumThing = 0
+  i = 1
+  use.i = 1
+  for (j in 1:nModels) {
+    col = colours[j]
+    rect(i-1,sumThing,i,sumThing+ICweights[j], border = col, col = col)
+    sumThing = sumThing + ICweights[j]
   }
-
-  title(main = main, xlab = xlab, ylab = ylab, line = 0.2)
-
-  axis(side=2, at=seq(0,1,0.5), labels=seq(0,1,0.5),cex.axis=1.5)
-  axis(side=1, at=seq(0,nSubj,nSubj), labels=seq(0,nSubj,nSubj), cex.axis=1.5)
-
-  par(xpd=TRUE) # lets plot legend be drawn outside of plot area
-
   legend("bottom",
-         legend = colnames(ICweights),
+         legend = names(ICweights),
          col = colours,
          pch = 15,
          #horiz = T,
          cex = cex,
          inset=inset,
          ncol = 4)
+  } else{
+
+    plot(
+      x = 100,
+      y = 100,
+      xlim = c(0, nSubj+0.5),
+      ylim = c(0, 1),
+      xlab = "",
+      ylab = "",
+      main = "",
+      xaxt = "n",
+      yaxt = "n"
+    )
+
+    for (i in 1:nSubj) {
+      use.i = i
+      sumThing = 0
+      for (j in 1:nModels) {
+        col = colours[j] # Purple
+        rect(i-0.5,sumThing,i+0.5,sumThing+ICweights[use.i,j], border = col, col = col)
+        sumThing = sumThing + ICweights[use.i, j]
+      }
+      legend("bottom",
+             legend = colnames(ICweights),
+             col = colours,
+             pch = 15,
+             #horiz = T,
+             cex = cex,
+             inset=inset,
+             ncol = 4)
+    }
+
+  }
+
+
+
+  title(main = main, xlab = xlab, ylab = ylab, line = 2)
+
+  axis(side=2, at=seq(0,1,0.5), labels=seq(0,1,0.5),cex.axis=1.5)
+  axis(side=1, at=seq(0,nSubj,nSubj), labels=seq(0,nSubj,nSubj), cex.axis=1.5)
+
+  par(xpd=TRUE) # lets plot legend be drawn outside of plot area
+
+
 
 }
+
 
 
 # Other things for  this package:

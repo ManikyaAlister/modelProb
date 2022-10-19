@@ -47,10 +47,35 @@ MMComparisonPlot =  function(ICweights,
   if (nModels1 != nModels2){warning("models1 and models2 are not the same length. Be careful with your interpretations")} # check to make sure there are the same amount of models in each group
 
   nModels = nModels1+nModels2
-  nSubj = length(ICweights[, 1])
 
+if (is.vector(ICweights)){ # if data is collapsed across subjects
+  nSubj = 1
   # draw blank plot area
-
+  plot(
+    x = 100,
+    y = 100,
+    xlim = c(0, nSubj),
+    ylim = c(0, 1),
+    xlab = "",
+    ylab = "",
+    main = "",
+    xaxt = "n",
+    yaxt = "n"
+  )
+  # fill with bar plot
+  i = 1
+  use.i=i
+  sumThing=0
+  col=colours[1]
+  currWeight=sum(ICweights[models1])
+  rect(0,0,i,currWeight, border = col, col = col)
+  sumThing=sumThing+currWeight
+  col=colours[2]
+  currWeight=sum(ICweights[models2])
+  rect(0,sumThing,i,sumThing+currWeight, border = col, col = col)
+  sumThing=sumThing+currWeight
+} else{ # if data is not collapsed across subjects
+  nSubj = length(ICweights[, 1])
   plot(
     x = 100,
     y = 100,
@@ -61,9 +86,7 @@ MMComparisonPlot =  function(ICweights,
     main = "",
     xaxt = "n",
     yaxt = "n"
-    )
-
-  # fill with bar plot
+  )
 
   for (i in 1:nSubj) {
     use.i=i
@@ -77,6 +100,8 @@ MMComparisonPlot =  function(ICweights,
     rect(i-0.5,sumThing,i+0.5,sumThing+currWeight, border = col, col = col)
     sumThing=sumThing+currWeight
   }
+}
+
 
   title(main = main, xlab = xlab, ylab = ylab, line = 0.2)
 

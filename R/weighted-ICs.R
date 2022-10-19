@@ -17,7 +17,7 @@ library(roxygen2)
 #' @examples
 #' weightedICs(exampleData)
 
-weightedICs = function(ICs){
+weightedICs = function(ICs, bySubject = TRUE){
 
   getWeights=function(x) {
     useX = x*(-0.5) # transform model criterion to a chi square distribution
@@ -44,6 +44,11 @@ weightedICs = function(ICs){
     ICweights[s,]= getWeights(as.matrix(ICs[s,]))
   }
   colnames(ICweights) = colnames(ICs)
+
+  if (bySubject == FALSE){
+    ICweights = apply(ICweights,2,mean)
+  }
+
   return(ICweights) #' @returns a matrix of probabilities
 }
 

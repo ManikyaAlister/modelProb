@@ -24,7 +24,7 @@ plotWeightedICs = function(ICweights,
                            main = "Weighted Model Comparison",
                            ylab = "Probability",
                            xlab = "Participant",
-                           colours = "random",
+                           colours = c("#800000" ,  "#0000FF", "#800080", "#FFC0CB","#00FF00", "#00FFFF", "#FF00FF", "#FFFF00", "#FFA500", "#008080", "#FF0000", "#00FF00", "#4B0082", "#000080", "#808000", "#00FFFF", "#C0C0C0", "#808080", "#A52A2A", "#FFD700"),
                            cex = .5,
                            seed = FALSE,
                            inset = c(-0.5,-.1)) {
@@ -44,49 +44,45 @@ plotWeightedICs = function(ICweights,
   set.seed(seed)
 
   # choose colours for each model in the barplot
-  if (colours == "random") {
+  if (length(colours) < nModels) {
     colours = sample(colors(), size = nModels, replace = FALSE) # select random colours if user does not want any particular colours
+    print("More colours than the default colour pallette (20). Colours selected randomly, set the seed argument to have a consistent colour scheme or choose your own vector of colours.")
   } else {
-    colours = colours # must be a vector of valid base r colours of length nModels
-    if (length(colours) != nModels) {
-      stop("Colours must be a vector of the same length as the number of models")
-    } else if (is.vector(colours) == FALSE) {
-      stop("Colours must be a vector")
+    colours = colours[1:nModels]
+  }
+
+
+
+  if (is.vector(ICweights)){
+
+    plot(
+      x = 100,
+      y = 100,
+      xlim = c(0, nSubj),
+      ylim = c(0, 1),
+      xlab = "",
+      ylab = "",
+      main = "",
+      xaxt = "n",
+      yaxt = "n"
+    )
+
+    sumThing = 0
+    i = 1
+    use.i = 1
+    for (j in 1:nModels) {
+      col = colours[j]
+      rect(i-1,sumThing,i,sumThing+ICweights[j], border = col, col = col)
+      sumThing = sumThing + ICweights[j]
     }
-  }
-
-
-
-if (is.vector(ICweights)){
-
-  plot(
-    x = 100,
-    y = 100,
-    xlim = c(0, nSubj),
-    ylim = c(0, 1),
-    xlab = "",
-    ylab = "",
-    main = "",
-    xaxt = "n",
-    yaxt = "n"
-  )
-
-  sumThing = 0
-  i = 1
-  use.i = 1
-  for (j in 1:nModels) {
-    col = colours[j]
-    rect(i-1,sumThing,i,sumThing+ICweights[j], border = col, col = col)
-    sumThing = sumThing + ICweights[j]
-  }
-  legend("bottom",
-         legend = names(ICweights),
-         col = colours,
-         pch = 15,
-         #horiz = T,
-         cex = cex,
-         inset=inset,
-         ncol = 4)
+    legend("bottom",
+           legend = names(ICweights),
+           col = colours,
+           pch = 15,
+           #horiz = T,
+           cex = cex,
+           inset=inset,
+           ncol = 4)
   } else{
 
     plot(

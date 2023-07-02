@@ -4,7 +4,7 @@
 \alias{weightedICs}
 \title{Get the weighted probabilities of different models for each participant}
 \usage{
-weightedICs(ICs)
+weightedICs(ICs, bySubject = TRUE)
 }
 \arguments{
 \item{ICs}{a numeric matrix/array/data frame containing the raw model comparison criterion values (e.g., AIC, BIC, LOOIC) for each model (columns) and participant (rows).}

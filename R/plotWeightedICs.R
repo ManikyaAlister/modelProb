@@ -26,6 +26,7 @@ plotWeightedICs = function(ICweights,
                            xlab = "Participant",
                            colours = c("#800000" ,  "#0000FF", "#800080", "#FFC0CB","#00FF00", "#00FFFF", "#FF00FF", "#FFFF00", "#FFA500", "#008080", "#FF0000", "#00FF00", "#4B0082", "#000080", "#808000", "#00FFFF", "#C0C0C0", "#808080", "#A52A2A", "#FFD700"),
                            cex = .5,
+                           position = "bottom",
                            seed = FALSE,
                            inset = c(-0.5,-.1)) {
 
@@ -75,7 +76,7 @@ plotWeightedICs = function(ICweights,
       rect(i-1,sumThing,i,sumThing+ICweights[j], border = col, col = col)
       sumThing = sumThing + ICweights[j]
     }
-    legend("bottom",
+    legend(position,
            legend = names(ICweights),
            col = colours,
            pch = 15,

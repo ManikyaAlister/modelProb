@@ -13,6 +13,7 @@ plotWeightedICs(
     "#FF00FF", "#FFFF00", "#FFA500", "#008080", "#FF0000", "#00FF00", "#4B0082",
     "#000080", "#808000", "#00FFFF", "#C0C0C0", "#808080", "#A52A2A", "#FFD700"),
   cex = 0.5,
+  position = "bottom",
   seed = FALSE,
   inset = c(-0.5, -0.1)
 )

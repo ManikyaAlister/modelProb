@@ -44,8 +44,5 @@ for each model (columns) and participant (rows) (which can be created made using
 plot.
 }
 \examples{
-plotWeightedICs(weightedICs(exampleData))
-plotWeightedICs(weightedICs(exampleData), colours = (c("darkblue","darkgreen","lightgreen","lightblue")))
-plotWeightedICs(weightedICs(exampleData), cex = 1, colours = (c("darkblue","darkgreen","lightgreen","lightblue")))
-
+plotWeightedICs(weightedICs(exampleData), cex = .7, inset = .01, colours = (c("darkblue","darkgreen","lightgreen","lightblue")))
 }

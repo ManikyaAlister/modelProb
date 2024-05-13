@@ -14,7 +14,7 @@ A matrix of probabilities corresponding to each participant (rows) and model (co
 }
 \description{
 Takes the raw model comparison information criterion values (e.g., AIC, BIC, LOOIC)
-for each model (columns) and participant (rows) and then converts them into a relitive probability
+for each model (columns) and participant (rows) and then converts them into a relative probability
 of that model being the best performing model according to that model comparison criterion.
 }
 \examples{

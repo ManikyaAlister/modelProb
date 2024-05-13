@@ -6,7 +6,7 @@ library(roxygen2)
 #' Get the weighted probabilities of different models for each participant
 #'
 #' @description Takes the raw model comparison information criterion values (e.g., AIC, BIC, LOOIC)
-#' for each model (columns) and participant (rows) and then converts them into a relitive probability
+#' for each model (columns) and participant (rows) and then converts them into a relative probability
 #' of that model being the best performing model according to that model comparison criterion.
 #'
 #' @param ICs a numeric matrix/array/data frame containing the raw model comparison criterion values (e.g., AIC, BIC, LOOIC) for each model (columns) and participant (rows).

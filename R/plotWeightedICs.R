@@ -16,10 +16,7 @@
 #' @return A stacked bar plot.
 #' @export
 #'
-#' @examples plotWeightedICs(weightedICs(exampleData))
-#' @examples plotWeightedICs(weightedICs(exampleData), colours = (c("darkblue","darkgreen","lightgreen","lightblue")))
-#' @examples plotWeightedICs(weightedICs(exampleData), cex = 1, colours = (c("darkblue","darkgreen","lightgreen","lightblue")))
-#'
+#' @examples plotWeightedICs(weightedICs(exampleData), cex = .7, inset = .01, colours = (c("darkblue","darkgreen","lightgreen","lightblue")))
 plotWeightedICs = function(ICweights,
                            main = "Weighted Model Comparison",
                            ylab = "Probability",

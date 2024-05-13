@@ -1,3 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^.*\.LICENSE.txt$
+^doc$
+^Meta$

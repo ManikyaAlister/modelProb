@@ -1,0 +1,157 @@
+---
+title: "Vignette for the modelProp R Package"
+author: "Manikya Alister"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{modelProb-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  fig.dim=c(8,6),
+  comment = "#>"
+)
+```
+
+This vignette details the functionality and usage of the modelProb package, which facilitates the computation and comparison of relative model probabilities using information criteria such as AIC and BIC. Information criterion can be somewhat unintuitive to interpret, and often are reported in a way that tells the reader which model is best, but does not facilitate easy interpretation as to how *much* better a model is relative to other candidates. Converting these criteria into relative probabilities facilitates a simple yet intuitive way of conveying these results. Below are explanations and examples for the primary functions included in the package. 
+
+## Installation
+
+The package can be installed from github and can be installed using the command ``devtools::install_github("https://github.com/ManikyaAlister/modelProb")`` (you may need to install the package ``devtools`` first).
+
+
+## Library usage
+
+To use the package, load it into the R environment:
+
+```{r}
+library(modelProb)
+```
+
+## Function: ``weightedICs``
+
+Get the weighted probabilities of different models for each participant
+
+### Description
+
+Takes the raw model comparison information criterion values (e.g., AIC, BIC, LOOIC) for each model (columns) and participant (rows) and then converts them into a relative probability of that model being the best performing model according to that model comparison criterion.
+
+### Usage 
+
+```
+weightedICs(ICs, bySubject = TRUE)
+```
+### Arguments
+
+- `ICs`: a numeric matrix/array/data frame containing the raw model comparison criterion values (e.g., AIC, BIC, LOOIC) for each model (columns) and participant (rows).
+
+### Value
+
+A matrix of probabilities corresponding to each participant (rows) and model (columns). To plot this output, see ?plotWeightedICs() and ?compareMM-ICs().
+
+### Example
+```{r}
+weightedICs(exampleData)
+```
+
+## Function: ``plotWeightedIC``
+
+Plot weighted model comparisons
+
+### Description
+
+Takes a matrix/array/data frame that contains model probabilities for each model (columns) and participant (rows) (which can be created made using the "weightedICs" function) and turns it into a stacked bar plot.
+
+### Usage
+```
+plotWeightedICs(
+  ICweights,
+  main = "Weighted Model Comparison",
+  ylab = "Probability",
+  xlab = "Participant",
+  colours = c("#800000", "#0000FF", "#800080", "#FFC0CB", "#00FF00", "#00FFFF",
+    "#FF00FF", "#FFFF00", "#FFA500", "#008080", "#FF0000", "#00FF00", "#4B0082",
+    "#000080", "#808000", "#00FFFF", "#C0C0C0", "#808080", "#A52A2A", "#FFD700"),
+  cex = 0.5,
+  position = "bottom",
+  seed = FALSE,
+  inset = c(-0.5, -0.1)
+)
+```
+
+### Arguments
+
+- `ICweights`: A numeric data frame/matrix/array that contains the model probabilities of each participant (rows) and each model (column).
+- `main`: Title of plot.
+- `ylab`: y axis label.
+- `xlab`: x axis label.
+- `colours`, `seed`: Character vector of base r colours. Default generates colours for each variable randomly. You can also try different numeric values for "seed" to try out different random colour combinations.
+- `cex`: Controls the size of the plot legend.
+- `inset`: Determines the position of the plot legend.
+- `groupNames`: Character vector of length 2 describing the names of the two groups of models (to be shown on the plot legend).
+
+### Value
+
+- A stacked bar plot.
+
+### Example
+
+```{r}
+plotWeightedICs(
+  weightedICs(exampleData),
+  cex = .7,
+  inset = .01,
+  colours = (c(
+    "darkblue", "darkgreen", "lightgreen", "lightblue"
+  ))
+)
+```
+
+## Function: ``MMComparisonPlot``
+
+Multiple Model Comparison Plot
+
+### Description
+
+Compare the relative probability of groups of models. 
+
+### Usage
+
+```
+MMComparisonPlot(
+  ICweights,
+  models1,
+  models2,
+  main = "Multiple Models Comparison",
+  ylab = "Probability",
+  xlab = "Participant",
+  groupNames = c("models1", "models2"),
+  inset = c(-0.5, -0.25),
+  colours = c("darkgreen", "lightblue")
+)
+```
+
+### Arguments
+
+- `ICweights`: A numeric data frame/matrix/array that contains the model comparison information criterion (e.g., AIC, BIC, LOOIC) of each participant (rows) and each model (column).
+- `models1`, `models2`: A vector of column names or column numbers indicating a group of models to be compared together. Note to be cautious when comparing groups that have an uneven number of models.
+- `main`: Title of plot.
+- `ylab`: y axis label.
+- `xlab`: x axis label.
+- `groupNames`: Character vector of length 2 describing the names of the two groups of models (to be shown on the plot legend).
+- `inset`: Determines the position of the plot legend.
+- `colours`: Character vector of length 2 containing valid R graphics colours.
+
+### Value
+
+- A stacked bar plot.
+
+### Examples
+
+```{r}
+MMComparisonPlot(weightedICs(exampleData), models1 = c("Model 1", "Model 2"), models2 = c("Model 3", "Model 4"))
+```
+
